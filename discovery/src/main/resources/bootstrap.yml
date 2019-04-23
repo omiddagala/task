@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: discovery
+#  cloud:
+#    config:
+#      uri: http://localhost:9002
+#      fail-fast: true
+#      password: password
+#      username: user
+
+server:
+  port: 9010
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://discovery:9010/eureka/
+  server:
+      waitTimeInMsWhenSyncEmpty: 0
+

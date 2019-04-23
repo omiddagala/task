@@ -1,0 +1,24 @@
+spring:
+  main:
+    banner-mode: "off"
+  jpa:
+    hibernate.ddl-auto: none
+  mvc:
+    dispatchTraceRequest: true
+    dispatchOptionsRequest: true
+
+server:
+  port: 9000
+
+zuul:
+  ignoredHeaders:
+  routes:
+    pepper:
+      path: /pepper/**
+      url: http://pepper:9011
+      sensitiveHeaders:
+
+    accounting:
+      path: /accounting/**
+      url: http://accounting:9001
+      sensitiveHeaders:

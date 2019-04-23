@@ -1,0 +1,35 @@
+#!/bin/bash
+
+builder="mvn clean package"
+$builder & pid=$!
+wait $pid
+
+discovery="java -jar ../hub/discovery/target/discovery.jar"
+$discovery & pid=$!
+sleep 5
+
+PID_LIST+=" $pid";
+
+args=("java -jar ../food/auth/target/security.jar & "
+   "java -jar ../food/gateway/target/gateway.jar & "
+   "java -jar ../food/shared_services/target/shared_services.jar & "
+   "java -jar ../food/config/target/config.jar & "
+   "java -jar ../food/pepper/target/pepper.jar & "
+   "java -jar ../food/accounting/target/accounting.jar & ")
+
+for cmd in "${args[@]}"; do {
+  $cmd & pid=$!
+  PID_LIST+=" $pid";
+
+  echo "Process \"$cmd\" started with pid of \"$pid\"";
+
+} done
+
+trap "kill $PID_LIST" SIGINT
+
+echo "Parallel processes have started";
+
+wait $PID_LIST
+
+echo
+echo "All processes have completed";
