@@ -1,0 +1,62 @@
+package com.mobilab.accounting.web.model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.time.LocalDate;
+
+@Entity(name = "transaction")
+public class Transaction {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String sourceAccountId;
+
+    private String destinationAccountId;
+
+    private Double amount;
+
+    private LocalDate date;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSourceAccountId() {
+        return sourceAccountId;
+    }
+
+    public void setSourceAccountId(String sourceAccountId) {
+        this.sourceAccountId = sourceAccountId;
+    }
+
+    public String getDestinationAccountId() {
+        return destinationAccountId;
+    }
+
+    public void setDestinationAccountId(String destinationAccountId) {
+        this.destinationAccountId = destinationAccountId;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+}

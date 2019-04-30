@@ -1,24 +1,27 @@
-spring:
-  main:
-    banner-mode: "off"
-  jpa:
-    hibernate.ddl-auto: none
-  mvc:
-    dispatchTraceRequest: true
-    dispatchOptionsRequest: true
-
 server:
   port: 9000
 
-zuul:
-  ignoredHeaders:
-  routes:
-    pepper:
-      path: /pepper/**
-      url: http://pepper:9011
-      sensitiveHeaders:
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
 
-    accounting:
-      path: /accounting/**
-      url: http://accounting:9001
-      sensitiveHeaders:
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+      routes:
+      - id: logger
+        uri: lb://logger
+        predicates:
+          - Path=/logger/**
+      - id: accounting
+        uri: lb://accounting
+        predicates:
+          - Path=/accounting/**
+
+
+
