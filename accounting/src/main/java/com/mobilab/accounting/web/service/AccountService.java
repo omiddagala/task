@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Service
 @Transactional
@@ -27,19 +28,12 @@ public class AccountService {
         this.transactionRepository = transactionRepository;
     }
 
-    public void save(Account account) {
-        accountRepository.save(account);
-    }
-
-    public Account findByAccountId(String accountId) {
-        return accountRepository.findByAccountId(accountId);
-    }
-
     public void create(AccountDTO accountDTO) {
         Account account = new Account();
         account.setName(accountDTO.getName());
         account.setAccountId(accountDTO.getAccountId());
         account.setCurrencyType(accountDTO.getCurrencyType());
+        account.setAmount(accountDTO.getAmount());
         accountRepository.save(account);
     }
 
@@ -68,8 +62,8 @@ public class AccountService {
         Double convertedSource = currencyConverter.convert(sourceAccount.getCurrencyType(), transferDTO.getAmount());
         Double newAmount = sourceAccount.getAmount() + convertedSource;
         sourceAccount.setAmount(newAmount);
+        destinationAccount.setAmount(destinationAccount.getAmount() - transferDTO.getAmount());
         logTransaction(transferDTO);
-        accountRepository.save(sourceAccount);
     }
 
     private void logTransaction(TransferDTO transferDTO) {
@@ -77,7 +71,7 @@ public class AccountService {
         transaction.setSourceAccountId(transferDTO.getSourceAccountId());
         transaction.setDestinationAccountId(transferDTO.getDestinationAccountId());
         transaction.setAmount(transferDTO.getAmount());
-        transaction.setDate(LocalDate.now());
+        transaction.setDate(new Date());
         transactionRepository.save(transaction);
     }
 

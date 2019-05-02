@@ -3,6 +3,7 @@ package com.mobilab.accounting.web.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Entity(name = "account")
 public class Account {
@@ -18,6 +19,8 @@ public class Account {
     private CurrencyType currencyType;
 
     private Double amount;
+    @Version
+    private Integer version;
 
     public Long getId() {
         return id;
@@ -57,5 +60,13 @@ public class Account {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/account")
 public class AccountingRest {
 
+    private final AccountService accountService;
+
     @Autowired
-    private AccountService accountService;
+    public AccountingRest(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> createAccount(@RequestBody AccountDTO accountDTO) {

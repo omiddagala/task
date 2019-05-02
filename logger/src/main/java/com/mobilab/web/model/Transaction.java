@@ -1,16 +1,12 @@
-package com.mobilab.accounting.web.model;
+package com.mobilab.web.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.io.Serializable;
 import java.util.Date;
 
-@Entity(name = "transaction")
 public class Transaction {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
     private String sourceAccountId;
